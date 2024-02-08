@@ -67,4 +67,4 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         )
         return connection
     except Exception as e:
-        raise e
+        return None
