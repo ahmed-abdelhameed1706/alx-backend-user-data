@@ -5,6 +5,7 @@ from typing import List
 import logging
 import os
 import mysql.connector
+import bcrypt
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -68,6 +69,16 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         return connection
     except mysql.connector.Error as e:
         return None
+
+
+def hash_password(password: str) -> str:
+    """returns a hashed password"""
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+
+password = "MyAmazingPassw0rd"
+print(hash_password(password))
+print(hash_password(password))
 
 
 def main() -> None:
