@@ -71,16 +71,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         return None
 
 
-def hash_password(password: str) -> str:
-    """returns a hashed password"""
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-
-
-password = "MyAmazingPassw0rd"
-print(hash_password(password))
-print(hash_password(password))
-
-
 def main() -> None:
     """ " connects to db"""
     db = get_db()
