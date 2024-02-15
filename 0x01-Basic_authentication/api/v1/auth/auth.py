@@ -20,8 +20,6 @@ class Auth:
                 else:
                     return True
 
-        return False
-
     def authorization_header(self, request=None) -> str:
         """authorization header method"""
         if request is None:
