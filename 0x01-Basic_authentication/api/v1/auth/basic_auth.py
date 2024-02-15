@@ -62,7 +62,7 @@ class BasicAuth(Auth):
         """get user from credentials"""
         if user_email is None or not isinstance(user_email, str):
             return
-        if user_pwd is None or not isinstance(user_email, str):
+        if user_pwd is None or not isinstance(user_pwd, str):
             return None
         users = User.search({"email": user_email})
         user = None
