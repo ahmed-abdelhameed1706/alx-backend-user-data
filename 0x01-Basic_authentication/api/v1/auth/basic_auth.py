@@ -64,15 +64,20 @@ class BasicAuth(Auth):
             return None
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
-        users = User.search({"email": user_email})
-        user = None
-        if len(users) > 0:
-            user = users[0]
-            if user.is_valid_password(user_pwd):
-                return user
-            else:
-                return None
-        return None
+
+        try:
+            users = User.search({"email": user_email})
+        except Exception:
+            return None
+
+        if not users:
+            return None
+
+        user = users[0]
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
 
     def current_user(self, request=None) -> TypeVar("User"):  # type: ignore
         """get current user"""
