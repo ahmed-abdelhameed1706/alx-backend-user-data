@@ -17,8 +17,10 @@ class Auth:
             if excluded.endswith("*"):
                 if path.startswith(excluded[:-1]) or path == excluded[:-1]:
                     return False
+                else:
+                    return True
 
-        return True
+        return False
 
     def authorization_header(self, request=None) -> str:
         """authorization header method"""
