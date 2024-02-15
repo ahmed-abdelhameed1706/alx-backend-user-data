@@ -68,9 +68,11 @@ class BasicAuth(Auth):
         user = None
         if len(users) > 0:
             user = users[0]
-            if not user.is_valid_password(user_pwd):
+            if user.is_valid_password(user_pwd):
+                return user
+            else:
                 return None
-        return user
+        return None
 
     def current_user(self, request=None) -> TypeVar("User"):  # type: ignore
         """get current user"""
