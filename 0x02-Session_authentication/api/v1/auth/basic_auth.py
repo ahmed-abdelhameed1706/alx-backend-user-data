@@ -9,7 +9,9 @@ from models.user import User
 class BasicAuth(Auth):
     """basic auth class"""
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+        self, authorization_header: str
+    ) -> str:  # no pep8
         """extracting method for base64"""
         if authorization_header is None:
             return None
@@ -48,25 +50,31 @@ class BasicAuth(Auth):
         if ":" not in decoded_base64_authorization_header:
             return None, None
 
-        splitted_header = decoded_base64_authorization_header.split(":")
-        username = splitted_header[0]
-        password = " ".join(splitted_header[1:])
+        user_creds = decoded_base64_authorization_header.split(":", 1)
+        return user_creds[0], user_creds[1]
 
-        return (username, password)
-
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar("User"):  # type: ignore
+    def user_object_from_credentials(
+        self, user_email: str, user_pwd: str
+    ) -> TypeVar("User"):  # no pep 8 # type: ignore
         """get user from credentials"""
         if user_email is None or not isinstance(user_email, str):
-            return
-        if user_pwd is None or not isinstance(user_email, str):
             return None
-        users = User.search({"email": user_email})
-        user = None
-        if len(users) > 0:
-            user = users[0]
-            if not user.is_valid_password(user_pwd):
-                return None
-        return
+        if user_pwd is None or not isinstance(user_pwd, str):
+            return None
+
+        try:
+            users = User.search({"email": user_email})
+        except Exception:
+            return None
+
+        if not users:
+            return None
+
+        user = users[0]
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
 
     def current_user(self, request=None) -> TypeVar("User"):  # type: ignore
         """get current user"""
