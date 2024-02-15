@@ -61,7 +61,7 @@ class BasicAuth(Auth):
     ) -> TypeVar("User"):  # no pep 8 # type: ignore
         """get user from credentials"""
         if user_email is None or not isinstance(user_email, str):
-            return
+            return None
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
         users = User.search({"email": user_email})
