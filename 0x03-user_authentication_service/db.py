@@ -28,28 +28,28 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email, hashed_password) -> User:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Add a user to the database"""
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs) -> User:
-        """Find a user by a given attribute"""
-        try:
-            user = self._session.query(User).filter_by(**kwargs).one()
-            return user
-        except NoResultFound:
-            raise NoResultFound
-        except InvalidRequestError:
-            raise InvalidRequestError
+    # def find_user_by(self, **kwargs) -> User:
+    #     """Find a user by a given attribute"""
+    #     try:
+    #         user = self._session.query(User).filter_by(**kwargs).one()
+    #         return user
+    #     except NoResultFound:
+    #         raise NoResultFound
+    #     except InvalidRequestError:
+    #         raise InvalidRequestError
 
-    def update_user(self, user_id, **kwargs) -> None:
-        """Update a user by a given attribute"""
-        user = self.find_user_by(id=user_id)
-        for key, value in kwargs.items():
-            if not hasattr(user, key):
-                raise ValueError
-            setattr(user, key, value)
-        self._session.commit()
+    # def update_user(self, user_id, **kwargs) -> None:
+    #     """Update a user by a given attribute"""
+    #     user = self.find_user_by(id=user_id)
+    #     for key, value in kwargs.items():
+    #         if not hasattr(user, key):
+    #             raise ValueError
+    #         setattr(user, key, value)
+    #     self._session.commit()
