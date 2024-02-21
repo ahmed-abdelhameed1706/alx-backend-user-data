@@ -30,7 +30,9 @@ class Auth:
         """Check if a user is valid"""
         try:
             user = self._db.find_user_by(email=email)
-            if user and checkpw(password.encode("utf-8"), user.hashed_password):
+            if user and checkpw(
+                password.encode("utf-8"), user.hashed_password
+            ):  # no pep8
                 return True
             else:
                 return False
